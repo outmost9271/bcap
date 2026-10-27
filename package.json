@@ -1,0 +1,49 @@
+{
+  "name": "bcap",
+  "version": "0.2.0",
+  "description": "Browser session recorder: rrweb incremental DOM, Playwright trace snapshots, network HAR, and action-context tuples",
+  "type": "module",
+  "bin": {
+    "bcap": "./bin/bcap"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "bcap.config.example.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "pi-package",
+    "browser",
+    "recording",
+    "rrweb",
+    "playwright",
+    "cdp",
+    "har",
+    "agent",
+    "dom"
+  ],
+  "license": "MIT",
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  },
+  "scripts": {
+    "test": "node test/run-all.mjs",
+    "test:trace": "node test/trace.test.mjs",
+    "test:rrweb": "node test/rrweb.test.mjs",
+    "test:tuples": "node test/tuples.test.mjs",
+    "verify": "node test/verify.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.64.1",
+    "rrweb": "^2.2.0",
+    "rrweb-player": "^2.2.0"
+  }
+}

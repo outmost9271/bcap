@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# bcap 入口：定位项目根后交给 Node。
+set -euo pipefail
+
+HERE="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# 当前环境未把 node 放进 PATH 时的兜底（可用 BCAP_NODE_ENV 覆盖）
+if ! command -v node >/dev/null 2>&1; then
+  for f in "${BCAP_NODE_ENV:-}" /pi/node/tool/lib/env.sh; do
+    if [ -n "$f" ] && [ -f "$f" ]; then
+      # shellcheck disable=SC1090
+      source "$f"
+      if [ -x /pi/node/tool/bin/fnm ]; then
+        eval "$(/pi/node/tool/bin/fnm env --shell bash)" 2>/dev/null || true
+      fi
+      break
+    fi
+  done
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "bcap: 找不到 node。请安装 Node 20+，或设置 BCAP_NODE_ENV 指向环境脚本。" >&2
+  exit 127
+fi
+
+exec node "$HERE/src/cli/index.mjs" "$@"
