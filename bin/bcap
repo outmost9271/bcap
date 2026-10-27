@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-# bcap 入口：定位项目根后交给 Node。
+# bcap 入口：解析软链后定位项目根，再交给 Node。
 set -euo pipefail
 
-HERE="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  DIR="$(cd -P -- "$(dirname -- "$SOURCE")" && pwd)"
+  SOURCE="$(readlink -- "$SOURCE")"
+  [[ "$SOURCE" != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+HERE="$(cd -P -- "$(dirname -- "$SOURCE")/.." && pwd)"
 
 # 当前环境未把 node 放进 PATH 时的兜底（可用 BCAP_NODE_ENV 覆盖）
 if ! command -v node >/dev/null 2>&1; then

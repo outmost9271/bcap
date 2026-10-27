@@ -2,6 +2,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+const expandHome = (p) =>
+  typeof p === 'string' && p.startsWith('~/') ? path.join(os.homedir(), p.slice(2)) : p;
+
 const DEFAULTS = {
   endpoint: 'http://127.0.0.1:9222',
   outDir: './out',
@@ -69,7 +72,7 @@ export function loadConfig({ cwd = process.cwd(), cli = {} } = {}) {
   if (process.env.BCAP_MODE) config.mode = process.env.BCAP_MODE;
 
   config = merge(config, clean(cli));
-  config.outDir = path.resolve(cwd, config.outDir);
+  config.outDir = path.resolve(cwd, expandHome(config.outDir));
 
   return { config, source };
 }
