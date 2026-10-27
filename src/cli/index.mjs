@@ -6,6 +6,7 @@ import { player } from './player.mjs';
 import { tuples } from './tuples.mjs';
 import { list } from './list.mjs';
 import { doctor } from './doctor.mjs';
+import { showConfig } from './config.mjs';
 
 const VERSION = '0.2.0';
 
@@ -20,6 +21,7 @@ const HELP = `bcap — 浏览器会话录制与分析
   player <session>      生成自包含回放 HTML
   tuples <session>      生成四元组（动作+上下文+DOM变化+网络）
   list                  列出所有录制
+  config                显示配置来源与内容
   doctor                检查环境
 
 全局选项:
@@ -69,6 +71,10 @@ const COMMAND_HELP = {
 `,
   list: `bcap list [--json]
 `,
+  config: `bcap config [--path]
+
+      --path  只输出配置文件路径
+`,
   doctor: `bcap doctor
 `,
 };
@@ -95,7 +101,7 @@ if (args.help) {
 
 const { config, source } = loadConfig({ cli: args });
 
-const COMMANDS = { record, replay, player, tuples, list, doctor };
+const COMMANDS = { record, replay, player, tuples, list, doctor, config: showConfig };
 const fn = COMMANDS[command];
 
 if (!fn) {

@@ -1,6 +1,6 @@
 {
-  "endpoint": "http://127.0.0.1:9222",
-  "outDir": "./out",
+  "endpoint": "http://192.168.133.1:9223",
+  "outDir": "~/.local/share/bcap/sessions",
   "mode": "rrweb",
   "trace": {
     "profile": "light",

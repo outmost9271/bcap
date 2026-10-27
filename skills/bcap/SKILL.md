@@ -46,6 +46,16 @@ trace.zip      网络 HAR（含请求体与响应体）
 steps.jsonl    四元组（由 bcap tuples 生成）
 ```
 
+## 配置
+
+配置内嵌在插件里，唯一路径：
+
+```bash
+bcap config --path
+```
+
+`bcap config` 显示生效配置。不要在其他目录创建 `bcap.config.json`，不会被读取；需要改端点或输出目录时，直接改这个文件。
+
 ## 命令
 
 | 命令 | 用途 |

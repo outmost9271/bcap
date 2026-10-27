@@ -12,7 +12,7 @@
     "skills",
     "README.md",
     "LICENSE",
-    "bcap.config.example.json"
+    "config"
   ],
   "engines": {
     "node": ">=20"

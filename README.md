@@ -158,29 +158,31 @@ bcap tuples <id>
 
 ## 配置
 
-`bcap.config.json`（项目根或 `~/.config/bcap/config.json`）：
+配置内嵌在插件里，唯一来源：
 
-```json
-{
-  "endpoint": "http://127.0.0.1:9222",
-  "outDir": "./out",
-  "mode": "rrweb",
-  "trace": {
-    "profile": "light",
-    "snapshotGap": 2500,
-    "debounce": 2500
-  }
-}
+```text
+<插件根>/config/bcap.config.json
 ```
 
-优先级：CLI 参数 > `BCAP_*` 环境变量 > 项目配置 > 用户配置 > 内置默认。
+```bash
+bcap config --path   # 打印配置文件路径
+bcap config          # 打印生效配置
+```
 
-| 环境变量 | 对应 |
+加载顺序：**CLI 参数 > 插件内嵌配置 > 内置默认**。
+
+不读取 cwd、`$HOME` 或环境变量里的配置，保证同一插件在任何目录行为一致。
+
+| 字段 | 说明 |
 |---|---|
-| `BCAP_ENDPOINT` | `endpoint` |
-| `BCAP_OUT_DIR` | `outDir` |
-| `BCAP_MODE` | `mode` |
-| `BCAP_CONFIG` | 指定配置文件路径 |
+| `endpoint` | CDP 端点 |
+| `outDir` | 会话输出目录，支持 `~` |
+| `mode` | 默认录制模式：`rrweb` / `trace` |
+| `trace.profile` | `light` / `full` / `events` |
+| `trace.snapshotGap` | 两次快照的最小间隔（ms） |
+| `trace.debounce` | 输入合并窗口（ms） |
+
+修改后无需重启，下一条命令即生效；`pi` 安装的包需要 `pi update --extensions` 才会同步 GitHub 上的改动。
 
 ## 产物
 

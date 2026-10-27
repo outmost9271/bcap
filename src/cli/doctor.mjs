@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { configCandidates } from '../core/config.mjs';
+import { EMBEDDED_CONFIG } from '../core/config.mjs';
 import { listSessions } from '../core/session.mjs';
 import { C } from '../util/log.mjs';
 
@@ -48,11 +48,10 @@ export async function doctor({ config, configSource, version }) {
     row('cdp /json/version', String(e?.message || e), false);
   }
 
-  const candidates = configCandidates();
   if (!configSource) {
     console.log('');
-    console.log('  提示: 在项目根创建 bcap.config.json 可固定端点与输出目录');
-    console.log(`        参考: ${path.join(ROOT, 'bcap.config.example.json')}`);
+    console.log('  提示: 插件内嵌配置缺失，正在使用内置默认值');
+    console.log(`        创建: ${path.join(ROOT, 'config', 'bcap.config.json')}`);
   }
 
   console.log('');
